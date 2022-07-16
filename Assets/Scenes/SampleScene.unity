@@ -428,6 +428,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba902c481e3a5ea4984fbb5e28dcc302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  focusedSize: {x: 9, y: 9, z: 9}
+  focusedPos: {x: -260, y: -45, z: -5}
+  focusedRot: {x: -90, y: -90, z: 90}
 --- !u!1 &111622157
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54e434f6198e9a43b9904546eff8aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
 --- !u!1 &545672882
 GameObject:
   m_ObjectHideFlags: 0
@@ -3208,6 +3212,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7716961207057480867, guid: 09dfa9e069259114a88e689f9842c8ba, type: 3}
+      propertyPath: hotbar
+      value: 
+      objectReference: {fileID: 101380642}
+    - target: {fileID: 7716961207057480867, guid: 09dfa9e069259114a88e689f9842c8ba, type: 3}
       propertyPath: diceIcon
       value: 
       objectReference: {fileID: 7098075400460630716}
@@ -3256,6 +3264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54e434f6198e9a43b9904546eff8aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
 --- !u!4 &5672083212379390016
 Transform:
   m_ObjectHideFlags: 0
@@ -3360,6 +3369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54e434f6198e9a43b9904546eff8aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
 --- !u!33 &9164963449691986311
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3380,3 +3390,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54e434f6198e9a43b9904546eff8aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10

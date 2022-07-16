@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     public HUDMeter healthBar;
     public HUDMeter shieldBar;
     public DiceIcon diceIcon;
+    public Hotbar hotbar;
     public float fireInterval = 0.2f;
     public float maxHealth = 100.0f;
     public float startingShield = 0.0f;
@@ -149,4 +151,46 @@ public class Player : MonoBehaviour
     public DiceThrower GetThrower() {
         return thrower;
     }
+    
+    private void SelectIfValid(int index) {
+        if(hotbar.IsValid(index)) {
+            hotbar.Select(index);
+        }
+    }
+    
+    // Input
+    
+    public void OnScroll(InputValue value) {
+        float scroll = value.Get<Vector2>().y;
+        if(scroll > 0) {
+            hotbar.SelectPrev();
+        } else if(scroll < 0) {
+            hotbar.SelectNext();
+        }
+    }
+    
+    public void OnSelectItem1() {
+        SelectIfValid(0);
+    }
+    
+    public void OnSelectItem2() {
+        SelectIfValid(1);
+    }
+    
+    public void OnSelectItem3() {
+        SelectIfValid(2);
+    }
+    
+    public void OnSelectItem4() {
+        SelectIfValid(3);
+    }
+    
+    public void OnSelectNext() {
+        hotbar.SelectNext();
+    }
+    
+    public void OnSelectPrev() {
+        hotbar.SelectPrev();
+    }
+    
 }
