@@ -72,11 +72,12 @@ MonoBehaviour:
   diceIcon: {fileID: 0}
   fireInterval: 0.35
   maxHealth: 100
-  startingShield: 20
+  startingShield: 0
   healthRegenDelay: 5
   healthRegenPerSecond: 5
   ammoRegenDelay: 1
   ammoRegenPenalty: 0.25
+  firePenaltyDelay: 0.5
   maxAmmo: 4
 --- !u!114 &4226228144728214100
 MonoBehaviour:
@@ -96,7 +97,6 @@ MonoBehaviour:
   throwSpeedForward: 1000
   throwSpeedUp: -100
   momentumMultiplier: 40
-  firePenaltyDelay: 0.5
   tumble: 100
 --- !u!33 &4226228144728214106
 MeshFilter:

@@ -107,14 +107,16 @@ public class DiceManager : MonoBehaviour
         return sum;
     }
     
-    public float GetHealFieldBuff(Vector3 pos) {
-        float sum = 0.0f;
+    public (float, float) GetHealFieldBuff(Vector3 pos) {
+        float healSum = 0.0f;
+        float shieldSum = 0.0f;
         foreach(HealField healField in healFields) {
             if(healField.IsInField(pos)) {
-                sum += healField.hpPerSecond;
+                healSum += healField.hpPerSecond;
+                shieldSum += healField.shieldPerSecond;
             }
         }
-        return sum;
+        return (healSum, shieldSum);
     }
     
     public float GetSlowFieldMultiplier(Vector3 pos) {

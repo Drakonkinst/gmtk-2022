@@ -6,6 +6,7 @@ using UnityEngine;
 public class HealField : Field
 {   
     public float hpPerSecond = 20.0f;
+    public float shieldPerSecond = 20.0f;
     
     protected override void Start() {
         base.Start();

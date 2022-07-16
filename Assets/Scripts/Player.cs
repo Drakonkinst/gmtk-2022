@@ -52,9 +52,12 @@ public class Player : MonoBehaviour
             Heal(healthRegenPerSecond * Time.deltaTime);
         }
         
-        float hpRegen = diceManager.GetHealFieldBuff(myTransform.position);
+        (float hpRegen, float shieldRegen) = diceManager.GetHealFieldBuff(myTransform.position);
         if(hpRegen > 0) {
             Heal(hpRegen * Time.deltaTime);
+        }
+        if(shieldRegen > 0) {
+            AddShield(shieldRegen * Time.deltaTime);
         }
         
         if(Time.time > nextAmmoRegen) {
@@ -71,6 +74,7 @@ public class Player : MonoBehaviour
     public void Damage(float amount) {
         if(shield >= amount) {
             shield -= amount;
+            amount = 0.0f;
             UpdateShieldBar();
         } else if(shield > 0) {
             amount -= shield;
@@ -98,6 +102,14 @@ public class Player : MonoBehaviour
             health = maxHealth;
         }
         UpdateHealthBar();
+    }
+    
+    public void AddShield(float amount) {
+        shield += amount;
+        if(shield > maxHealth) {
+            shield = maxHealth;
+        }
+        UpdateShieldBar();
     }
     
     public void OnShootDice() {

@@ -113,3 +113,4 @@ MonoBehaviour:
   maxDuration: 10
   radius: 5
   hpPerSecond: 15
+  shieldPerSecond: 0

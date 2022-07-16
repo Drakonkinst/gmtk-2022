@@ -12,6 +12,7 @@ public class Dice : MonoBehaviour
     public float explosionDamage = 100.0f;
     public float smallExplosionRadius = 3.0f;
     public float bigExplosionRadius = 5.0f;
+    public int overrideFace = -1;
     
     private Rigidbody rb;
     private float currRestTime = 0.0f;
@@ -145,6 +146,10 @@ public class Dice : MonoBehaviour
     }
     
     private int GetFaceFromRotation(float x, float z) {
+        if(overrideFace > 0) {
+            return overrideFace;
+        }
+        
         if(x == 270 && z == 0) {
             return 1;
         }

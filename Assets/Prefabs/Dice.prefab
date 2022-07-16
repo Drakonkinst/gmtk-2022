@@ -53,6 +53,7 @@ MonoBehaviour:
   explosionDamage: 100
   smallExplosionRadius: 4
   bigExplosionRadius: 8
+  overrideFace: 3
 --- !u!33 &7098075400793510478
 MeshFilter:
   m_ObjectHideFlags: 0
