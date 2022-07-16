@@ -13,10 +13,13 @@ public class DiceManager : MonoBehaviour
     public HealField bigHealField;
     public SlowField smallSlowField;
     public SlowField bigSlowField;
+    public DecoyField smallDecoyField;
+    public DecoyField bigDecoyField;
     
     private List<DamageField> damageFields = new List<DamageField>();
     private List<HealField> healFields = new List<HealField>();
     private List<SlowField> slowFields = new List<SlowField>();
+    private List<DecoyField> decoyFields = new List<DecoyField>();
     
     void Start()
     {
@@ -52,6 +55,14 @@ public class DiceManager : MonoBehaviour
         SpawnField(bigSlowField, pos);
     }
     
+    public void SpawnSmallDecoyField(Vector3 pos) {
+        SpawnField(smallDecoyField, pos);
+    }
+    
+    public void SpawnBigDecoyField(Vector3 pos) {
+        SpawnField(bigDecoyField, pos);
+    }
+    
     public void SpawnField(Field fieldPrefab, Vector3 pos) {
         GameObject obj = Instantiate(fieldPrefab.gameObject, pos, Quaternion.identity, fieldsParent);
         Field field = obj.GetComponent<Field>();
@@ -64,6 +75,9 @@ public class DiceManager : MonoBehaviour
         } else if(field is SlowField) {
             SlowField slowField = field as SlowField;
             slowFields.Add(slowField);
+        } else if(field is DecoyField) {
+            DecoyField decoyField = field as DecoyField;
+            decoyFields.Add(decoyField);
         }
     }
     
@@ -77,6 +91,9 @@ public class DiceManager : MonoBehaviour
         } else if(field is SlowField) {
             SlowField slowField = field as SlowField;
             slowFields.Remove(slowField);
+        } else if(field is DecoyField) {
+            DecoyField decoyField = field as DecoyField;
+            decoyFields.Remove(decoyField);
         }
     }
     
@@ -110,5 +127,19 @@ public class DiceManager : MonoBehaviour
             }
         }
         return multiplier;
+    }
+    
+    public DecoyField GetNearestDecoy(Vector3 pos) {
+        float minDistSq = Mathf.Infinity;
+        DecoyField nearest = null;
+        foreach(DecoyField decoy in decoyFields) {
+            Vector3 decoyPos = decoy.transform.position;
+            float distSq = (decoyPos - pos).sqrMagnitude;
+            if(distSq < decoy.range * decoy.range && distSq < minDistSq) {
+                nearest = decoy;
+                minDistSq = distSq;
+            }   
+        }
+        return nearest;
     }
 }

@@ -10,9 +10,14 @@ public abstract class Field : MonoBehaviour
     
     public float maxDuration = 5;
     public float radius = 10.0f;
+    protected float yOffset = 0.0f;
     protected float timeRemaining;
     protected DiceManager diceManager;
     protected Vector3 center;
+    
+    protected virtual void Awake() {
+
+    }
     
     protected virtual void Start() {
         timeRemaining = maxDuration;
@@ -25,9 +30,13 @@ public abstract class Field : MonoBehaviour
     protected virtual void Update() {
         timeRemaining -= Time.deltaTime;
         if(timeRemaining <= 0) {
-            diceManager.OnFieldExpire(this);
-            Destroy(gameObject);
+            OnDestroy();
         }
+    }
+    
+    protected void OnDestroy() {
+        diceManager.OnFieldExpire(this);
+        Destroy(gameObject);
     }
     
     public bool IsInField(Vector3 pos) {

@@ -9,6 +9,9 @@ public class Dice : MonoBehaviour
     
     public float activationTime = 1.0f;
     public float disableTime = 0.1f;
+    public float explosionDamage = 100.0f;
+    public float smallExplosionRadius = 3.0f;
+    public float bigExplosionRadius = 5.0f;
     
     private Rigidbody rb;
     private float currRestTime = 0.0f;
@@ -72,18 +75,63 @@ public class Dice : MonoBehaviour
     }
     
     private void DoDiceEffects(int face, bool doubled) {
-        if(face == 2) {
+        if(face == 1) {
+            if(doubled) {
+                // Spawn two items
+            } else {
+                // Spawn item
+            }
+        } else if(face == 2) {
             if(doubled) {
                 GameState.instance.GetDiceManager().SpawnBigSlowField(myTransform.position);
             } else {
                 GameState.instance.GetDiceManager().SpawnSmallSlowField(myTransform.position);
             }
-        }
-        if(face == 5) {
+        } else if(face == 3) {
+            if(doubled) {
+                GameState.instance.GetDiceManager().SpawnBigHealField(myTransform.position);
+            } else {
+                GameState.instance.GetDiceManager().SpawnSmallHealField(myTransform.position);
+            }
+        } else if(face == 4) {
+            if(doubled) {
+                DoBigExplosion();
+            } else {
+                DoSmallExplosion();
+            }
+        } else if(face == 5) {
             if(doubled) {
                 GameState.instance.GetDiceManager().SpawnBigDamageField(myTransform.position);
             } else {
                 GameState.instance.GetDiceManager().SpawnSmallDamageField(myTransform.position);
+            }
+        } else if(face == 6) {
+            if(doubled) {
+                GameState.instance.GetDiceManager().SpawnBigDecoyField(myTransform.position);
+            } else {
+                GameState.instance.GetDiceManager().SpawnSmallDecoyField(myTransform.position);
+            }
+        }
+    }
+    
+    private void DoSmallExplosion() {
+        Transform enemies = GameState.instance.GetEnemySpawner().enemyParent;
+        foreach(Transform enemy in enemies) {
+            float distSq = (myTransform.position - enemy.position).sqrMagnitude;
+            if(distSq <= smallExplosionRadius * smallExplosionRadius) {
+                EnemyController enemyData = enemy.GetComponent<EnemyController>();
+                enemyData.Damage(explosionDamage);
+            }
+        }
+    }
+    
+    private void DoBigExplosion() {
+        Transform enemies = GameState.instance.GetEnemySpawner().enemyParent;
+        foreach(Transform enemy in enemies) {
+            float distSq = (myTransform.position - enemy.position).sqrMagnitude;
+            if(distSq <= bigExplosionRadius * bigExplosionRadius) {
+                EnemyController enemyData = enemy.GetComponent<EnemyController>();
+                enemyData.Damage(explosionDamage);
             }
         }
     }

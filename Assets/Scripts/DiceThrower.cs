@@ -42,10 +42,15 @@ public class DiceThrower : MonoBehaviour
     void Update()
     {
         bool shouldFire = isMouseHeld || gamepadInput.sqrMagnitude >= minGamepadThreshold * minGamepadThreshold;
-        if(shouldFire && nextFire < Time.time) {
+        if(player.CanShootDice() && shouldFire && nextFire < Time.time) {
             Vector3 dir = FindTargetDir();
             Fire(dir);
-            nextFire = Time.time + player.fireInterval;
+            if(player.CanShootDice()) {
+                nextFire = Time.time + player.fireInterval;
+            } else {
+                nextFire = Time.time + player.fireInterval + player.firePenaltyDelay;
+            }
+
         }
     }
     
@@ -82,5 +87,6 @@ public class DiceThrower : MonoBehaviour
         diceRb.angularVelocity = Random.insideUnitSphere * tumble;
         diceRb.rotation = Quaternion.Euler(new Vector3(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f)));
         diceRb.AddForce(velocity);
+        player.OnShootDice();
     }
 }

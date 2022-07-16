@@ -35,7 +35,18 @@ public class EnemyController : MonoBehaviour
     }
     
     void Update() {
-        agent.destination = playerTransform.position;
+        // Check decoy
+        DecoyField nearestDecoy = diceManager.GetNearestDecoy(myTransform.position);
+        if(nearestDecoy == null) {
+            agent.destination = playerTransform.position;
+        } else {
+            agent.destination = nearestDecoy.transform.position;
+            float distSqToDecoy = (myTransform.position - agent.destination).sqrMagnitude;
+            if(distSqToDecoy <= contactDamageDistance * contactDamageDistance && Time.time > nextContactDamage) {
+                nearestDecoy.Hit(1);
+                nextContactDamage = Time.time + contactDamageInterval;
+            }
+        }
         
         // Check slow fields
         float slowFieldMultiplier = diceManager.GetSlowFieldMultiplier(myTransform.position);

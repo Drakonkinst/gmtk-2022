@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 4226228144728214103}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +67,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f287eba06f5994ea864b6da1d41b6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
+  shieldBar: {fileID: 0}
+  diceIcon: {fileID: 0}
   fireInterval: 0.35
+  maxHealth: 100
+  startingShield: 20
+  healthRegenDelay: 5
+  healthRegenPerSecond: 5
+  ammoRegenDelay: 1
+  ammoRegenPenalty: 0.25
+  maxAmmo: 4
 --- !u!114 &4226228144728214100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +96,7 @@ MonoBehaviour:
   throwSpeedForward: 1000
   throwSpeedUp: -100
   momentumMultiplier: 40
+  firePenaltyDelay: 0.5
   tumble: 100
 --- !u!33 &4226228144728214106
 MeshFilter:
