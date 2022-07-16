@@ -9,7 +9,7 @@ public class GameState : MonoBehaviour
 {
     public static GameState instance;
     
-    public GameObject player;
+    public Player player;
     public Transform diceParent;
     public Camera mainCamera;
     public Renderer groundRenderer;
@@ -33,7 +33,7 @@ public class GameState : MonoBehaviour
         walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
     }
 
-    public GameObject GetPlayer() {
+    public Player GetPlayer() {
         return player;
     }
     

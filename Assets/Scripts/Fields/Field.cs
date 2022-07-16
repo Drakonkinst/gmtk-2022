@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Field : MonoBehaviour
 {   
     private const float imageMultiplier = 0.2f;
-    private const float height = 0.001f;
+    private const float height = -0.13f;
     
     public float maxDuration = 5;
     public float radius = 10.0f;

@@ -51,12 +51,10 @@ public class DiceThrower : MonoBehaviour
     
     public void OnFire(InputValue value) {
         isMouseHeld = value.isPressed;
-        Debug.Log(isMouseHeld + " MOUSE");
     }
     
     public void OnFireDirectional(InputValue value) {
         gamepadInput = value.Get<Vector2>();
-        Debug.Log(gamepadInput + " GAMEPAD");
     }
     
     private Vector3 FindTargetDir() {

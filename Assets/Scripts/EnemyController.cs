@@ -9,6 +9,10 @@ public class EnemyController : MonoBehaviour
     public float baseSpeed = 5.0f;
     public float turnSpeed = 5.0f;
     public float maxHealth = 100.0f;
+    public float stoppingDistance = 2.0f;
+    public float contactDamageDistance = 2.2f;
+    public float contactDamageInterval = 3.0f;
+    public float contactDamage = 10.0f;
     
     protected NavMeshAgent agent;
     protected Transform playerTransform;
@@ -16,6 +20,7 @@ public class EnemyController : MonoBehaviour
     protected DiceManager diceManager;
     protected float health;
     protected bool isDead = false;
+    protected float nextContactDamage;
 
     void Awake() {
         myTransform = transform;
@@ -25,17 +30,28 @@ public class EnemyController : MonoBehaviour
     
     void Start() {
         diceManager = GameState.instance.GetDiceManager();
-        playerTransform = GameState.instance.GetPlayer().transform;
+        playerTransform = GameState.instance.GetPlayer().GetTransform();
+        agent.stoppingDistance = stoppingDistance;
     }
     
     void Update() {
         agent.destination = playerTransform.position;
+        
+        // Check slow fields
         float slowFieldMultiplier = diceManager.GetSlowFieldMultiplier(myTransform.position);
         agent.speed = baseSpeed * slowFieldMultiplier;
         
+        // Check damage fields
         float dmgFieldDebuff = diceManager.GetDamageFieldDebuff(myTransform.position);
         if(dmgFieldDebuff > 0.0f) {
             Damage(dmgFieldDebuff * Time.deltaTime);
+        }
+        
+        // Check contact damage
+        float distanceSqToPlayer = (myTransform.position - playerTransform.position).sqrMagnitude;
+        if(distanceSqToPlayer <= contactDamageDistance * contactDamageDistance && Time.time > nextContactDamage) {
+            GameState.instance.GetPlayer().Damage(contactDamage);
+            nextContactDamage = Time.time + contactDamageInterval;
         }
         
         if(isDead) {

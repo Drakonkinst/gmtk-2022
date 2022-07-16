@@ -54,6 +54,10 @@ MonoBehaviour:
   baseSpeed: 5
   turnSpeed: 100
   maxHealth: 100
+  stoppingDistance: 2
+  contactDamageDistance: 2.2
+  contactDamageInterval: 2
+  contactDamage: 10
 --- !u!33 &7076059079538415637
 MeshFilter:
   m_ObjectHideFlags: 0
