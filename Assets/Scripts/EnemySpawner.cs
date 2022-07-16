@@ -64,6 +64,7 @@ public class EnemySpawner : MonoBehaviour
         // Pick position
         // TODO: Make sure it is not close to the player
         Vector3 position = GameState.instance.RandomGroundPoint();
+        position = new Vector3(position.x, 1.0f, position.z);
         Debug.Log("Spawning enemy at " + position);
         
         // Spawn enemy

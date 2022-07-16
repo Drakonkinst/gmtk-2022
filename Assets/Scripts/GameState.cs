@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(EnemySpawner))]
+[RequireComponent(typeof(DiceManager))]
 public class GameState : MonoBehaviour
 {
     public static GameState instance;
     
     public GameObject player;
+    public Transform diceParent;
     public Camera mainCamera;
     public Renderer groundRenderer;
     
     private EnemySpawner enemySpawner;
+    private DiceManager diceManager;
     private Vector3 groundCenter;
     private float groundWidth;
     private float groundHeight;
@@ -20,6 +24,7 @@ public class GameState : MonoBehaviour
     void Awake() {
         instance = this;
         enemySpawner = GetComponent<EnemySpawner>();
+        diceManager = GetComponent<DiceManager>();
 
         Bounds bounds = groundRenderer.bounds;
         groundCenter = bounds.center;
@@ -57,5 +62,13 @@ public class GameState : MonoBehaviour
     
     public float GetGroundLength() {
         return groundHeight;
+    }
+    
+    public DiceManager GetDiceManager() {
+        return diceManager;
+    }
+    
+    public Transform GetDiceParent() {
+        return diceParent;
     }
 }

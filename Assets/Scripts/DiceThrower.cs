@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 public class DiceThrower : MonoBehaviour
 {
     public GameObject dicePrefab;
-    public Transform diceParent;
     public float spawnOffsetForward = 5;
     public float spawnOffsetUp = 0;
     public float throwSpeedForward = 500.0f;
@@ -40,7 +39,7 @@ public class DiceThrower : MonoBehaviour
     
     public void OnFire() {
         Vector3 spawnPos = myTransform.position + myTransform.forward * spawnOffsetForward + new Vector3(0.0f, spawnOffsetUp, 0.0f);
-        GameObject dice = Instantiate(dicePrefab, spawnPos, myTransform.rotation, diceParent);
+        GameObject dice = Instantiate(dicePrefab, spawnPos, myTransform.rotation, GameState.instance.GetDiceParent());
         Rigidbody diceRb = dice.GetComponent<Rigidbody>();
         
         float forwardSpeed = throwSpeedForward;
