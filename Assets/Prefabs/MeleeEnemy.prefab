@@ -51,7 +51,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: melee
+  baseSpeed: 5
   turnSpeed: 100
+  maxHealth: 100
 --- !u!33 &7076059079538415637
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -165,7 +167,6 @@ GameObject:
   - component: {fileID: 7076059080906865698}
   - component: {fileID: 7076059080906865703}
   - component: {fileID: 7076059080906865700}
-  - component: {fileID: 7076059080906865701}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -238,17 +239,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7076059080906865701
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7076059080906865699}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

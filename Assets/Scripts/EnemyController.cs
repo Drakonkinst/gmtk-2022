@@ -49,7 +49,6 @@ public class EnemyController : MonoBehaviour
             health = 0.0f;
             isDead = true;
         }
-        Debug.Log(health);
     }
     
     void LookToward(Vector3 destination, float distance) {

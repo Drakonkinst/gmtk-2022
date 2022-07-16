@@ -36,7 +36,7 @@ public class Dice : MonoBehaviour
                 float xRotation = Mathf.Round(myTransform.rotation.eulerAngles.x / AngleRotation) * AngleRotation;
                 float zRotation = Mathf.Round(myTransform.rotation.eulerAngles.z / AngleRotation) * AngleRotation;
                 face = GetFaceFromRotation(xRotation, zRotation);
-                Debug.Log(face);
+                //Debug.Log(face);
             }
             if(currRestTime > activationTime) {
                 bool doubled = CheckDoubled();

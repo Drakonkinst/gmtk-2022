@@ -49,8 +49,10 @@ public class PlayerController : MonoBehaviour
         //Vector3 skewedInput = isometricMatrix.MultiplyPoint3x4(inputDirection);
         Vector3 relative = (myTransform.position + inputDirection) - myTransform.position;
         Quaternion rotation = Quaternion.LookRotation(relative, Vector3.up);
-        //myTransform.rotation = Quaternion.RotateTowards(myTransform.rotation, rotation, turnSpeed * Time.deltaTime);
-        myTransform.rotation = rotation;
+        
+        // Instant vs smooth rotation
+        myTransform.rotation = Quaternion.RotateTowards(myTransform.rotation, rotation, turnSpeed * Time.deltaTime);
+        //myTransform.rotation = rotation;
     }
     
     public Vector3 GetMovementVelocity() {

@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "FireDirectional",
+                    "type": "Value",
+                    "id": "e912f1ba-cb8c-4e79-916f-631c11a73653",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -94,8 +103,8 @@
                 {
                     "name": "",
                     "id": "29a7ecbb-5e77-461b-a38d-c1889f277584",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Fire",
@@ -104,12 +113,12 @@
                 },
                 {
                     "name": "",
-                    "id": "a58cd193-ded0-482d-9e1f-83d8915b5c11",
-                    "path": "<Gamepad>/buttonWest",
+                    "id": "bc2c8f54-c42c-41af-bf99-1b8ac7cf06e6",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Fire",
+                    "action": "FireDirectional",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
