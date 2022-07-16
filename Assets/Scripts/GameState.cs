@@ -15,6 +15,7 @@ public class GameState : MonoBehaviour
     private Vector3 groundCenter;
     private float groundWidth;
     private float groundHeight;
+    private int walkableMask;
     
     void Awake() {
         instance = this;
@@ -24,6 +25,7 @@ public class GameState : MonoBehaviour
         groundCenter = bounds.center;
         groundWidth = bounds.extents.x * 2;
         groundHeight = bounds.extents.z * 2;
+        walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
     }
 
     public GameObject GetPlayer() {
@@ -46,7 +48,7 @@ public class GameState : MonoBehaviour
         
         // Get closest point on NavMesh
         NavMeshHit hit;
-        if(NavMesh.SamplePosition(pos, out hit, 10.0f, NavMesh.AllAreas)) {
+        if(NavMesh.SamplePosition(pos, out hit, 10.0f, walkableMask)) {
             return hit.position;
         }
         Debug.LogWarning("Failed to find a navmesh position near " + pos);

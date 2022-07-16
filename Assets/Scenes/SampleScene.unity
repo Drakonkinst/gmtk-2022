@@ -1072,6 +1072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxStrength: 5
+  currentStrength: 0
   spawnInterval: 5
   enemies:
   - id: melee

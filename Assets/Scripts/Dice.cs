@@ -7,6 +7,7 @@ public class Dice : MonoBehaviour
     private const float AngleRotation = 90.0f;
     
     public float activationTime = 1.0f;
+    public float disableTime = 0.1f;
     private Rigidbody rb;
     private float currRestTime = 0.0f;
     private Transform myTransform;
@@ -39,7 +40,11 @@ public class Dice : MonoBehaviour
         }
     }
     
-    int GetFaceFromRotation(float x, float z) {
+    public bool ShouldDamage() {
+        return currRestTime < disableTime;
+    }
+    
+    private int GetFaceFromRotation(float x, float z) {
         if(x == 270 && z == 0) {
             return 1;
         }

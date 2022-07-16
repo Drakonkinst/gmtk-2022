@@ -34,7 +34,10 @@ public class EnemyController : MonoBehaviour
     
     void OnCollisionEnter(Collision collision) {
         if(collision.collider.tag == "Dice") {
-            OnDeath();
+            Dice dice = collision.gameObject.GetComponent<Dice>();
+            if(dice.ShouldDamage()) {
+                OnDeath();
+            }
         }
     }
     
