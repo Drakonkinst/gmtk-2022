@@ -51,6 +51,7 @@ public class DiceThrower : MonoBehaviour
         }
         Vector3 velocity = dice.transform.forward * forwardSpeed + dice.transform.up * throwSpeedUp;
         diceRb.angularVelocity = Random.insideUnitSphere * tumble;
+        diceRb.rotation = Quaternion.Euler(new Vector3(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f)));
         diceRb.AddForce(velocity);
     }
 }
