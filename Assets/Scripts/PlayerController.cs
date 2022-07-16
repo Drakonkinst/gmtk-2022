@@ -45,10 +45,12 @@ public class PlayerController : MonoBehaviour
     }
     
     void Look(Vector3 inputDirection) {
-        Vector3 skewedInput = isometricMatrix.MultiplyPoint3x4(inputDirection);
-        Vector3 relative = (myTransform.position + skewedInput) - myTransform.position;
+        // Isometric: https://www.youtube.com/watch?v=8ZxVBCvJDWk
+        //Vector3 skewedInput = isometricMatrix.MultiplyPoint3x4(inputDirection);
+        Vector3 relative = (myTransform.position + inputDirection) - myTransform.position;
         Quaternion rotation = Quaternion.LookRotation(relative, Vector3.up);
-        myTransform.rotation = Quaternion.RotateTowards(myTransform.rotation, rotation, turnSpeed * Time.deltaTime);
+        //myTransform.rotation = Quaternion.RotateTowards(myTransform.rotation, rotation, turnSpeed * Time.deltaTime);
+        myTransform.rotation = rotation;
     }
     
     public Vector3 GetMovementVelocity() {

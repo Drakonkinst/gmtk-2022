@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class DiceThrower : MonoBehaviour
 {
-    
-    public Camera mainCam;
     public GameObject dicePrefab;
     public Transform diceParent;
     public float spawnOffsetForward = 5;
