@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
     public float contactDamage = 10.0f;
     
     protected NavMeshAgent agent;
-    protected Transform playerTransform;
+    protected Player player;
     protected Transform myTransform;
     protected DiceManager diceManager;
     protected float health;
@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
     
     void Start() {
         diceManager = GameState.instance.GetDiceManager();
-        playerTransform = GameState.instance.GetPlayer().GetTransform();
+        player = GameState.instance.GetPlayer();
         agent.stoppingDistance = stoppingDistance;
     }
     
@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
         // Check decoy
         DecoyField nearestDecoy = diceManager.GetNearestDecoy(myTransform.position);
         if(nearestDecoy == null) {
-            agent.destination = playerTransform.position;
+            agent.destination = player.GetTransform().position;
         } else {
             agent.destination = nearestDecoy.transform.position;
             float distSqToDecoy = (myTransform.position - agent.destination).sqrMagnitude;
@@ -59,7 +59,7 @@ public class EnemyController : MonoBehaviour
         }
         
         // Check contact damage
-        float distanceSqToPlayer = (myTransform.position - playerTransform.position).sqrMagnitude;
+        float distanceSqToPlayer = (myTransform.position - player.GetTransform().position).sqrMagnitude;
         if(distanceSqToPlayer <= contactDamageDistance * contactDamageDistance && Time.time > nextContactDamage) {
             GameState.instance.GetPlayer().Damage(contactDamage);
             nextContactDamage = Time.time + contactDamageInterval;
@@ -90,8 +90,19 @@ public class EnemyController : MonoBehaviour
             Dice dice = collision.gameObject.GetComponent<Dice>();
             if(dice.ShouldDamage(gameObject.GetInstanceID())) {
                 Damage(60.0f);
+                if(player.HasItem("PopcornShot") && dice.numSplits > 0) {
+                    // Split
+                    Vector3 dicePos = dice.transform.position;
+                    FirePopcorn(dicePos, dice.numSplits - 1);
+                    FirePopcorn(dicePos, dice.numSplits - 1);
+                }
             }
         }
+    }
+    
+    private void FirePopcorn(Vector3 pos, int numSplits) {
+        Vector3 dir = new Vector3(Random.value, 0.0f, Random.value).normalized;
+        player.GetThrower().Fire(pos, dir, false, numSplits);
     }
     
     private void OnDeath() {

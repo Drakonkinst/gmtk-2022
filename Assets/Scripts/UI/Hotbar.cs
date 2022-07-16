@@ -26,6 +26,25 @@ public class Hotbar : MonoBehaviour
         }
     }
     
+    public void SetContents(string[] inventory) {
+        if(inventory.Length != items.Length) {
+            Debug.LogWarning("Inventory and Hotbar length should match (" + inventory.Length + " vs " + items.Length + ")");
+        }
+        for(int i = 0; i < items.Length; ++i) {
+            if(inventory[i] == null || inventory[i].Length <= 0) {
+                // TODO Set slot inactive
+                continue;
+            }
+            
+            string id = inventory[i];
+            ItemEntry entry = GameState.instance.GetItemInfo(id);
+            if(entry.id != "") {
+                // Set slot inactive
+            }
+            // TODO set item
+        }
+    }
+    
     public void Select(int index) {
         Debug.Log("SELECT " + index);
         foreach(HotbarItem item in items) {

@@ -178,7 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fill: {fileID: 1656883635}
   initialValue: 0
-  acceleration: 0.1
+  acceleration: 0.2
 --- !u!114 &7218881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fill: {fileID: 572314557}
   initialValue: 1
-  acceleration: 0.1
+  acceleration: 0.2
 --- !u!114 &620359200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2669,6 +2669,39 @@ MonoBehaviour:
   diceParent: {fileID: 2062011766}
   mainCamera: {fileID: 963194227}
   groundRenderer: {fileID: 111622159}
+  itemRegistry:
+  - id: QuickShot
+    description: 
+    weight: 0
+    stackable: 1
+  - id: MoreAmmo
+    description: 
+    weight: 0
+    stackable: 0
+  - id: DoubleShot
+    description: 
+    weight: 0
+    stackable: 1
+  - id: PopcornShot
+    description: 
+    weight: 0
+    stackable: 0
+  - id: LongShot
+    description: 
+    weight: 0
+    stackable: 1
+  - id: Undying
+    description: 
+    weight: 0
+    stackable: 1
+  - id: FastReload
+    description: 
+    weight: 0
+    stackable: 1
+  - id: FastRun
+    description: 
+    weight: 0
+    stackable: 1
 --- !u!4 &1887648177
 Transform:
   m_ObjectHideFlags: 0
@@ -3227,6 +3260,10 @@ PrefabInstance:
       propertyPath: shieldBar
       value: 
       objectReference: {fileID: 7218880}
+    - target: {fileID: 7716961207057480867, guid: 09dfa9e069259114a88e689f9842c8ba, type: 3}
+      propertyPath: inventory.Array.data[0]
+      value: FastRun
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09dfa9e069259114a88e689f9842c8ba, type: 3}
 --- !u!4 &4332134477803806752

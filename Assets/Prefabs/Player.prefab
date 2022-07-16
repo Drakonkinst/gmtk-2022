@@ -70,6 +70,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
   diceIcon: {fileID: 0}
+  hotbar: {fileID: 0}
   fireInterval: 0.35
   maxHealth: 100
   startingShield: 0
@@ -79,6 +80,15 @@ MonoBehaviour:
   ammoRegenPenalty: 0.25
   firePenaltyDelay: 0.5
   maxAmmo: 4
+  bonusMaxAmmo: 2
+  bonusReloadMultiplier: 0.3
+  undyingHeal: 60
+  undyingShield: 30
+  inventory:
+  - 
+  - 
+  - 
+  - 
 --- !u!114 &4226228144728214100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +108,8 @@ MonoBehaviour:
   throwSpeedUp: -100
   momentumMultiplier: 40
   tumble: 100
+  bonusThrowSpeed: 250
+  bonusThrowRateMultiplier: 0.5
 --- !u!33 &4226228144728214106
 MeshFilter:
   m_ObjectHideFlags: 0

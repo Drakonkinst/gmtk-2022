@@ -9,10 +9,12 @@ public class Dice : MonoBehaviour
     
     public float activationTime = 1.0f;
     public float disableTime = 0.1f;
+    public float damageSpeedMin = 1.0f;
     public float explosionDamage = 100.0f;
     public float smallExplosionRadius = 3.0f;
     public float bigExplosionRadius = 5.0f;
     public int overrideFace = -1;
+    public int numSplits = 3;
     
     private Rigidbody rb;
     private float currRestTime = 0.0f;
@@ -138,7 +140,8 @@ public class Dice : MonoBehaviour
     }
     
     public bool ShouldDamage(int id) {
-        return rb.velocity.sqrMagnitude > Mathf.Epsilon && wasHit.Add(id);
+        //Debug.Log(rb.velocity.magnitude + " " + (rb.velocity.sqrMagnitude > damageSpeedMin * damageSpeedMin));
+        return rb.velocity.sqrMagnitude > damageSpeedMin * damageSpeedMin && wasHit.Add(id);
     }
     
     public int GetFace() {

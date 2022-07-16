@@ -17,6 +17,10 @@ public class DiceThrower : MonoBehaviour
     public float momentumMultiplier = 40.0f;
     public float tumble = 50.0f;
     
+    // Upgrades
+    public float bonusThrowSpeed = 100.0f;
+    public float bonusThrowRateMultiplier = 0.25f;
+    
     private Transform myTransform;
     private PlayerController movement;
     private Player player;
@@ -44,13 +48,19 @@ public class DiceThrower : MonoBehaviour
         bool shouldFire = isMouseHeld || gamepadInput.sqrMagnitude >= minGamepadThreshold * minGamepadThreshold;
         if(player.CanShootDice() && shouldFire && nextFire < Time.time) {
             Vector3 dir = FindTargetDir();
-            Fire(dir);
-            if(player.CanShootDice()) {
-                nextFire = Time.time + player.fireInterval;
-            } else {
-                nextFire = Time.time + player.fireInterval + player.firePenaltyDelay;
+            Fire(myTransform.position, dir, true);
+            int numDoubleShot = player.GetCount("DoubleShot");
+            while(numDoubleShot > 0) {
+                Fire(myTransform.position, dir, false);
+                numDoubleShot--;
             }
-
+        
+            int quickShotBonus = player.GetCount("QuickShot");
+            float delay = Mathf.Clamp(player.fireInterval * Mathf.Clamp01(1.0f - bonusThrowRateMultiplier * quickShotBonus), 0.1f, Mathf.Infinity);
+            if(!player.CanShootDice()) {
+                delay += player.firePenaltyDelay;
+            }
+            nextFire = Time.time + delay;
         }
     }
     
@@ -74,12 +84,17 @@ public class DiceThrower : MonoBehaviour
         }
     }
     
-    private void Fire(Vector3 targetDir) {
-        Vector3 spawnPos = myTransform.position + targetDir * spawnOffsetForward + new Vector3(0.0f, spawnOffsetUp, 0.0f);
+    // targetDir must be NORMALIZED
+    public void Fire(Vector3 position, Vector3 targetDir, bool consumeDice, int numSplits = -1) {
+        Vector3 spawnPos = position + targetDir * spawnOffsetForward + new Vector3(0.0f, spawnOffsetUp, 0.0f);
         GameObject dice = Instantiate(dicePrefab, spawnPos, Quaternion.LookRotation(targetDir, Vector3.up), GameState.instance.GetDiceParent());
         Rigidbody diceRb = dice.GetComponent<Rigidbody>();
+        // -1 is default
+        if(numSplits > -1) {
+            dice.GetComponent<Dice>().numSplits = numSplits;
+        }
         
-        float forwardSpeed = throwSpeedForward;
+        float forwardSpeed = throwSpeedForward + player.GetCount("LongShot") * bonusThrowSpeed;
         if(movement.IsMoving()) {
             forwardSpeed += movement.GetMaxSpeed() * momentumMultiplier;
         }
@@ -87,6 +102,8 @@ public class DiceThrower : MonoBehaviour
         diceRb.angularVelocity = Random.insideUnitSphere * tumble;
         diceRb.rotation = Quaternion.Euler(new Vector3(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f)));
         diceRb.AddForce(velocity);
-        player.OnShootDice();
+        if(consumeDice) {
+            player.OnShootDice();
+        }
     }
 }

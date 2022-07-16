@@ -1,7 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+[Serializable]
+public struct ItemEntry {
+    public string id;
+    public string description;
+    public float weight;
+    public bool stackable;
+    // TODO: Icon prefab
+}
 
 [RequireComponent(typeof(EnemySpawner))]
 [RequireComponent(typeof(DiceManager))]
@@ -13,6 +23,7 @@ public class GameState : MonoBehaviour
     public Transform diceParent;
     public Camera mainCamera;
     public Renderer groundRenderer;
+    public ItemEntry[] itemRegistry;
     
     private EnemySpawner enemySpawner;
     private DiceManager diceManager;
@@ -47,8 +58,8 @@ public class GameState : MonoBehaviour
     
     public Vector3 RandomGroundPoint() {
         // Generate random possible point
-        float x = Random.Range(groundCenter.x - groundWidth / 2, groundCenter.x + groundWidth / 2);
-        float z = Random.Range(groundCenter.z - groundHeight / 2, groundCenter.z + groundHeight / 2);
+        float x = UnityEngine.Random.Range(groundCenter.x - groundWidth / 2, groundCenter.x + groundWidth / 2);
+        float z = UnityEngine.Random.Range(groundCenter.z - groundHeight / 2, groundCenter.z + groundHeight / 2);
         Vector3 pos = new Vector3(x, groundCenter.y, z);
         
         // Get closest point on NavMesh
@@ -70,5 +81,15 @@ public class GameState : MonoBehaviour
     
     public Transform GetDiceParent() {
         return diceParent;
+    }
+    
+    public ItemEntry GetItemInfo(string id) {
+        foreach(ItemEntry item in itemRegistry) {
+            if(item.id == id) {
+                return item;
+            }
+        }
+        Debug.LogWarning("Unknown item " + id);
+        return new ItemEntry();
     }
 }

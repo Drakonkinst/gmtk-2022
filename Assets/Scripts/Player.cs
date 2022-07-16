@@ -18,6 +18,11 @@ public class Player : MonoBehaviour
     public float ammoRegenPenalty = 0.25f;
     public float firePenaltyDelay = 0.5f;
     public int maxAmmo = 4;
+    public int bonusMaxAmmo = 2;
+    public float bonusReloadMultiplier = 0.3f;
+    public float undyingHeal = 60.0f;
+    public float undyingShield = 30.0f;
+    public string[] inventory;
     
     private Transform myTransform;
     private DiceThrower thrower;
@@ -36,6 +41,9 @@ public class Player : MonoBehaviour
         thrower = GetComponent<DiceThrower>();
         movement = GetComponent<PlayerController>();
         ammo = maxAmmo;
+        if(inventory == null) {
+            inventory = new string[4];
+        }
     }
     
     // Start is called before the first frame update
@@ -45,6 +53,7 @@ public class Player : MonoBehaviour
         UpdateShieldBar();
         diceIcon.SetFaceInstant(ammo);
         diceManager = GameState.instance.GetDiceManager();
+        UpdateHotbar();
     }
 
     // Update is called once per frame
@@ -63,12 +72,12 @@ public class Player : MonoBehaviour
         }
         
         if(Time.time > nextAmmoRegen) {
-            if(ammo < maxAmmo) {
+            if(ammo < GetMaxAmmo()) {
                 ammo++;
                 diceIcon.SetFace(ammo);
             }
-            if(ammo < maxAmmo) {
-                nextAmmoRegen = Time.time + ammoRegenDelay;
+            if(ammo < GetMaxAmmo()) {
+                SetNextAmmoRegen();
             }
         }
     }
@@ -87,7 +96,13 @@ public class Player : MonoBehaviour
             health -= amount;
             if(health <= 0) {
                 health = 0.0f;
-                // Dead
+                if(HasItem("Undying")) {
+                    Heal(undyingHeal);
+                    AddShield(undyingShield);
+                    RemoveItem("Undying");
+                } else {
+                    // Dead
+                }
             }
             UpdateHealthBar();
             nextHealthRegenDelay = Time.time + healthRegenDelay;
@@ -120,12 +135,7 @@ public class Player : MonoBehaviour
             ammo = 0;
         }
         diceIcon.SetFace(ammo);
-        float nextRegen = Time.time + ammoRegenDelay;
-        if(ammo == 0) {
-            nextAmmoRegen = nextRegen + ammoRegenPenalty;
-        } else {
-            nextAmmoRegen = nextRegen;
-        }
+        SetNextAmmoRegen();
     }
     
     private void UpdateHealthBar() {
@@ -156,6 +166,23 @@ public class Player : MonoBehaviour
         if(hotbar.IsValid(index)) {
             hotbar.Select(index);
         }
+    }
+    
+    public int GetMaxAmmo() {
+        if(HasItem("MoreAmmo")) {
+            return maxAmmo + bonusMaxAmmo;
+        }
+        return maxAmmo;
+    }
+    
+    private void SetNextAmmoRegen() {
+        float delay = ammoRegenDelay;
+        if(ammo == 0) {
+            delay += ammoRegenPenalty;
+        }
+        int reloadBonus = GetCount("FastReload");
+        delay *= Mathf.Clamp(1.0f - bonusReloadMultiplier * reloadBonus, 0.4f, 1.0f);
+        nextAmmoRegen = Time.time + delay;
     }
     
     // Input
@@ -193,4 +220,70 @@ public class Player : MonoBehaviour
         hotbar.SelectPrev();
     }
     
+    // Items
+    
+    public bool HasItem(string id) {
+        return GetIndex(id) > -1;
+    }
+    
+    public int GetCount(string id) {
+        int sum = 0;
+        foreach(string item in inventory) {
+            if(item == id) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+    
+    public bool HasOpenSlot() {
+        foreach(string item in inventory) {
+            if(item == null || item.Length <= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private int GetNextOpenSlot() {
+        for(int i = 0; i < inventory.Length; ++i) {
+            if(inventory[i] == null || inventory[i].Length <= 0) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public int GetIndex(string id) {
+        for(int i = 0; i < inventory.Length; ++i) {
+            if(inventory[i] == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public bool AddItem(string id) {
+        int nextOpenSlot = GetNextOpenSlot();
+        if(nextOpenSlot < 0) {
+            return false;
+        }
+        inventory[nextOpenSlot] = id;
+        UpdateHotbar();
+        return true;
+    }
+    
+    public bool RemoveItem(string id) {
+        int index = GetIndex(id);
+        if(index < 0) {
+            return false;
+        }
+        inventory[index] = null;
+        UpdateHotbar();
+        return true;
+    }
+    
+    private void UpdateHotbar() {
+        hotbar.SetContents(inventory);
+    }
 }
