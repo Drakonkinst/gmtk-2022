@@ -110,6 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91007db181e93b4f9788f126f81163e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDuration: 5
+  maxDuration: 3
   radius: 12
   damagePerSecond: 30

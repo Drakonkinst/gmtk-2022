@@ -55,7 +55,7 @@ MonoBehaviour:
   smallExplosionRadius: 4
   bigExplosionRadius: 8
   overrideFace: -1
-  numSplits: 3
+  numSplits: 1
   diceRollSound:
     sounds:
     - {fileID: 8300000, guid: 4903c003f1014d64387f5ce884e8123e, type: 3}
