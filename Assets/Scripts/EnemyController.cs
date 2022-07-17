@@ -133,6 +133,7 @@ public class EnemyController : MonoBehaviour
         }
         GameState.instance.GetEnemySpawner().OnDeath(id);
         GameState.instance.PlaySound(deathSound);
+        GameState.instance.enemiesKilled++;
         Destroy(gameObject);
     }
 }

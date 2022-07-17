@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 [Serializable]
 public struct ItemEntry {
@@ -29,6 +31,11 @@ public class GameState : MonoBehaviour
     public Renderer groundRenderer;
     public ItemEntry[] itemRegistry;
     public GameObject itemDropPrefab;
+    public TextMeshProUGUI timeSurvivedText;
+    public GameObject gameOverScreen;
+    public TextMeshProUGUI gameOverTime;
+    public TextMeshProUGUI gameOverKills;
+    public int enemiesKilled = 0;
     
     private EnemySpawner enemySpawner;
     private DiceManager diceManager;
@@ -61,7 +68,25 @@ public class GameState : MonoBehaviour
         // TODO: Check if game is actually running
         if(!player.isDead) {
             timeSurvived += Time.deltaTime;
+            timeSurvivedText.text = "" + ((int) timeSurvived);
         }
+        if(player.isDead && !gameOverScreen.activeSelf) {
+            gameOverTime.text = "Time Survived: " + ((int) timeSurvived) + " seconds";
+            gameOverKills.text = "Enemies Killed: " + enemiesKilled;
+            gameOverScreen.SetActive(true);
+        }
+    }
+    
+    public void QuitGame() {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+    
+    public void StartScene(string sceneName) {
+        SceneManager.LoadScene(sceneName);
     }
 
     public Player GetPlayer() {
