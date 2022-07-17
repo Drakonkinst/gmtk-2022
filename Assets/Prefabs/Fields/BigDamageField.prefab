@@ -112,4 +112,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDuration: 5
   radius: 12
-  damagePerSecond: 40
+  damagePerSecond: 30

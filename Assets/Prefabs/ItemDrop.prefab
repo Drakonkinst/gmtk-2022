@@ -100,7 +100,7 @@ MonoBehaviour:
   pickupDistance: 1.5
   dropPickupDelay: 1
   lootPickupDelay: 0.2
-  lifetime: 60
+  lifetime: 30
   rotationPerSecond: 60
   velocity: 10
   velocityDecayPerSecond: 50

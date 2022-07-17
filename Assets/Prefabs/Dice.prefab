@@ -51,7 +51,7 @@ MonoBehaviour:
   activationTime: 0.5
   disableTime: 0.1
   damageSpeedMin: 1
-  explosionDamage: 120
+  explosionDamage: 100
   smallExplosionRadius: 4
   bigExplosionRadius: 8
   overrideFace: -1

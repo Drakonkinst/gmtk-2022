@@ -51,14 +51,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: melee
-  baseSpeed: 5
+  baseSpeed: 10
   turnSpeed: 100
   maxHealth: 100
   stoppingDistance: 2
   contactDamageDistance: 2.2
   contactDamageInterval: 2
   contactDamage: 10
-  cardDropChance: 0.2
+  cardDropChance: 0.1
   canShoot: 0
   projectilePrefab: {fileID: 0}
   diceHitSound:

@@ -57,10 +57,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6554288df7387f8489369e263abe1a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDuration: 6
+  maxDuration: 5
   radius: 5
   range: 10
-  numHits: 3
+  numHits: 1
 --- !u!23 &2154620843667572153
 MeshRenderer:
   m_ObjectHideFlags: 0

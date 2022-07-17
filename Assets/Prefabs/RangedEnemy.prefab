@@ -141,12 +141,20 @@ PrefabInstance:
       value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
+      propertyPath: cardDropChance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 5283716314144525049, guid: 7c824533b66778541b2bb574b1b53f96, type: 3}
     - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
       propertyPath: stoppingDistance
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
+      propertyPath: contactDamageInterval
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7076059080906865700, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
       propertyPath: m_Materials.Array.data[0]

@@ -142,11 +142,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
       propertyPath: baseSpeed
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
       propertyPath: maxHealth
-      value: 250
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
       propertyPath: contactDamage
@@ -154,7 +154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
       propertyPath: cardDropChance
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7076059079538415642, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
       propertyPath: contactDamageInterval
