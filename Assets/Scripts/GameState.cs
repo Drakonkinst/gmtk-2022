@@ -7,7 +7,7 @@ using UnityEngine.AI;
 [Serializable]
 public struct ItemEntry {
     public string id;
-    public string description;
+    public string name;
     public float weight;
     public bool stackable;
     public Material card;
@@ -15,13 +15,16 @@ public struct ItemEntry {
 
 [RequireComponent(typeof(EnemySpawner))]
 [RequireComponent(typeof(DiceManager))]
+[RequireComponent(typeof(AudioManager))]
 public class GameState : MonoBehaviour
 {
     public static GameState instance;
     
     public Player player;
     public Transform diceParent;
+    public Transform particleParent;
     public Transform itemDropParent;
+    public Transform projectileParent;
     public Camera mainCamera;
     public Renderer groundRenderer;
     public ItemEntry[] itemRegistry;
@@ -30,6 +33,7 @@ public class GameState : MonoBehaviour
     private EnemySpawner enemySpawner;
     private DiceManager diceManager;
     private Vector3 groundCenter;
+    private AudioManager audioManager;
     private float groundWidth;
     private float groundHeight;
     private int walkableMask;
@@ -40,6 +44,7 @@ public class GameState : MonoBehaviour
         instance = this;
         enemySpawner = GetComponent<EnemySpawner>();
         diceManager = GetComponent<DiceManager>();
+        audioManager = GetComponent<AudioManager>();
 
         Bounds bounds = groundRenderer.bounds;
         groundCenter = bounds.center;
@@ -65,6 +70,10 @@ public class GameState : MonoBehaviour
     
     public Camera GetMainCamera() {
         return mainCamera;
+    }
+    
+    public Transform GetProjectileParent() {
+        return projectileParent;
     }
     
     public EnemySpawner GetEnemySpawner() {
@@ -102,6 +111,23 @@ public class GameState : MonoBehaviour
         return timeSurvived;
     }
     
+    public AudioManager GetAudioManager() {
+        return audioManager;
+    }
+    
+    public void PlaySound(SoundEffect effect) {
+        audioManager.PlaySound(effect);
+    }
+    
+    public void PlayEffect(GameObject prefab, Vector3 position) {
+        PlayEffect(prefab, position, particleParent);
+    }
+    
+    public void PlayEffect(GameObject prefab, Vector3 position, Transform parent) {
+        GameObject effect = Instantiate(prefab, position, Quaternion.identity, parent);
+        effect.GetComponent<ParticleSystem>().Play();
+    }
+    
     public ItemEntry GetItemInfo(string id) {
         foreach(ItemEntry item in itemRegistry) {
             if(item.id == id) {
@@ -127,8 +153,13 @@ public class GameState : MonoBehaviour
         return new ItemEntry();
     }
     
-    public void SpawnItemDrop(Vector3 pos, bool dropped) {
-        ItemEntry item = RandomItem();
+    public void SpawnItemDrop(Vector3 pos, bool dropped, string id = "") {
+        ItemEntry item;
+        if(id == "") {
+            item = RandomItem();
+        } else {
+            item = GetItemInfo(id);
+        }
         GameObject obj = Instantiate(itemDropPrefab, pos, Quaternion.identity, itemDropParent);
         ItemDrop drop = obj.GetComponent<ItemDrop>();
         drop.SetItem(item.id);

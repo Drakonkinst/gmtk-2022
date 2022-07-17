@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    private const float stoppingBuffer = 0.5f;
+    
     public string id = "Enemy";
     public float baseSpeed = 5.0f;
     public float turnSpeed = 5.0f;
@@ -14,6 +16,12 @@ public class EnemyController : MonoBehaviour
     public float contactDamageInterval = 3.0f;
     public float contactDamage = 10.0f;
     public float cardDropChance = 1.0f;
+    public bool canShoot = false;
+    public GameObject projectilePrefab;
+    public SoundEffect diceHitSound;
+    public SoundEffect deathSound;
+    public SoundEffect popcornShotSound;
+    public SoundEffect hitPlayerSound;
     
     protected NavMeshAgent agent;
     protected Player player;
@@ -63,6 +71,11 @@ public class EnemyController : MonoBehaviour
         float distanceSqToPlayer = (myTransform.position - player.GetTransform().position).sqrMagnitude;
         if(distanceSqToPlayer <= contactDamageDistance * contactDamageDistance && Time.time > nextContactDamage) {
             GameState.instance.GetPlayer().Damage(contactDamage);
+            GameState.instance.PlaySound(hitPlayerSound);
+            nextContactDamage = Time.time + contactDamageInterval;
+        }
+        if(canShoot && distanceSqToPlayer <= (stoppingDistance + stoppingBuffer) * (stoppingDistance + stoppingBuffer) && Time.time > nextContactDamage) {
+            Instantiate(projectilePrefab, myTransform.position, Quaternion.identity, GameState.instance.GetProjectileParent());
             nextContactDamage = Time.time + contactDamageInterval;
         }
         
@@ -91,11 +104,13 @@ public class EnemyController : MonoBehaviour
             Dice dice = collision.gameObject.GetComponent<Dice>();
             if(dice.ShouldDamage(gameObject.GetInstanceID())) {
                 Damage(60.0f);
+                GameState.instance.PlaySound(diceHitSound);
                 if(player.HasItem("PopcornShot") && dice.numSplits > 0) {
                     // Split
                     Vector3 dicePos = dice.transform.position;
                     FirePopcorn(dicePos, dice.numSplits - 1);
                     FirePopcorn(dicePos, dice.numSplits - 1);
+                    GameState.instance.PlaySound(popcornShotSound);
                 }
             }
         }
@@ -111,6 +126,7 @@ public class EnemyController : MonoBehaviour
             GameState.instance.SpawnItemDrop(myTransform.position, false);
         }
         GameState.instance.GetEnemySpawner().OnDeath(id);
+        GameState.instance.PlaySound(deathSound);
         Destroy(gameObject);
     }
 }

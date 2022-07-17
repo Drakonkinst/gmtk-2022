@@ -58,6 +58,7 @@ MonoBehaviour:
   contactDamageDistance: 2.2
   contactDamageInterval: 2
   contactDamage: 10
+  cardDropChance: 0.2
 --- !u!33 &7076059079538415637
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public class DiceThrower : MonoBehaviour
     public float throwSpeedUp = 100.0f;
     public float momentumMultiplier = 40.0f;
     public float tumble = 50.0f;
+    public SoundEffect throwDiceSound;
     
     // Upgrades
     public float bonusThrowSpeed = 100.0f;
@@ -49,6 +50,7 @@ public class DiceThrower : MonoBehaviour
         if(player.CanShootDice() && shouldFire && nextFire < Time.time) {
             Vector3 dir = FindTargetDir();
             Fire(myTransform.position, dir, true);
+            GameState.instance.PlaySound(throwDiceSound);
             int numDoubleShot = player.GetCount("DoubleShot");
             while(numDoubleShot > 0) {
                 Fire(myTransform.position, dir, false);

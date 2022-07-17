@@ -15,6 +15,14 @@ public class Dice : MonoBehaviour
     public float bigExplosionRadius = 5.0f;
     public int overrideFace = -1;
     public int numSplits = 3;
+    public SoundEffect diceRollSound;
+    public SoundEffect doubledSound;
+    public SoundEffect spawnCardSound;
+    public SoundEffect freezeSound;
+    public SoundEffect damageSound;
+    public SoundEffect healSound;
+    public SoundEffect explosionSound;
+    public SoundEffect decoySound;
     
     private Rigidbody rb;
     private float currRestTime = 0.0f;
@@ -81,39 +89,51 @@ public class Dice : MonoBehaviour
         if(face == 1) {
             if(doubled) {
                 // Spawn two items
+                GameState.instance.SpawnItemDrop(myTransform.position, false);
+                GameState.instance.SpawnItemDrop(myTransform.position, false);
             } else {
                 // Spawn item
+                GameState.instance.SpawnItemDrop(myTransform.position, false);
             }
+            GameState.instance.PlaySound(spawnCardSound);
         } else if(face == 2) {
             if(doubled) {
                 GameState.instance.GetDiceManager().SpawnBigSlowField(myTransform.position);
             } else {
                 GameState.instance.GetDiceManager().SpawnSmallSlowField(myTransform.position);
             }
+            GameState.instance.PlaySound(freezeSound);
         } else if(face == 3) {
             if(doubled) {
                 GameState.instance.GetDiceManager().SpawnBigHealField(myTransform.position);
             } else {
                 GameState.instance.GetDiceManager().SpawnSmallHealField(myTransform.position);
             }
+            GameState.instance.PlaySound(healSound);
         } else if(face == 4) {
             if(doubled) {
                 DoBigExplosion();
             } else {
                 DoSmallExplosion();
             }
+            GameState.instance.PlaySound(explosionSound);
         } else if(face == 5) {
             if(doubled) {
                 GameState.instance.GetDiceManager().SpawnBigDamageField(myTransform.position);
             } else {
                 GameState.instance.GetDiceManager().SpawnSmallDamageField(myTransform.position);
             }
+            GameState.instance.PlaySound(damageSound);
         } else if(face == 6) {
             if(doubled) {
                 GameState.instance.GetDiceManager().SpawnBigDecoyField(myTransform.position);
             } else {
                 GameState.instance.GetDiceManager().SpawnSmallDecoyField(myTransform.position);
             }
+            GameState.instance.PlaySound(decoySound);
+        }
+        if(doubled) {
+            GameState.instance.PlaySound(doubledSound);
         }
     }
     
@@ -172,5 +192,11 @@ public class Dice : MonoBehaviour
             return 6;
         }
         return -999;
+    }
+    
+    void OnCollisionEnter(Collision col) {
+        if(col.collider.tag == "Terrain") {
+            GameState.instance.PlaySound(diceRollSound);
+        }
     }
 }

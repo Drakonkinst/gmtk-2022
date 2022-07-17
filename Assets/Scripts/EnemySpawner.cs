@@ -22,9 +22,11 @@ public class EnemySpawner : MonoBehaviour
     public float spawnInterval = 5.0f;
     public EnemyEntry[] enemies;
     public Transform enemyParent;
-    public float weightSum = 0.0f;
+    public float difficultyIncreaseInterval = 10.0f;
     
     private float nextSpawn;
+    private float weightSum = 0.0f;
+    private float nextIncrease;
     
     void Awake() {
         foreach(EnemyEntry entry in enemies) {
@@ -37,6 +39,7 @@ public class EnemySpawner : MonoBehaviour
     {
         DoSpawns();
         nextSpawn = Time.time + spawnInterval;
+        nextIncrease = Time.time + difficultyIncreaseInterval;
     }
 
     // Update is called once per frame
@@ -45,7 +48,12 @@ public class EnemySpawner : MonoBehaviour
         if(Time.time > nextSpawn) {
             DoSpawns();
             nextSpawn = Time.time + spawnInterval;
-        }        
+        }    
+        if(Time.time > nextIncrease) {
+            ++maxStrength;
+            Debug.Log("DIFFICULTY " + maxStrength);
+            nextIncrease = Time.time + difficultyIncreaseInterval;
+        }    
     }
     
     public void OnDeath(string id) {

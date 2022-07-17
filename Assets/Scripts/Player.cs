@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public float undyingShield = 30.0f;
     public string[] inventory;
     public bool isDead = false;
+    public SoundEffect dropCardSound;
     
     private Transform myTransform;
     private DiceThrower thrower;
@@ -305,9 +306,13 @@ public class Player : MonoBehaviour
         int selectedIndex = hotbar.GetSelectedIndex();
         Debug.Log(selectedIndex);
         if(selectedIndex > -1) {
+            if(inventory[selectedIndex] != null && inventory[selectedIndex].Length > 0) {
+                GameState.instance.SpawnItemDrop(myTransform.position, true, inventory[selectedIndex]);
+                GameState.instance.PlaySound(dropCardSound);
+            }    
             // TODO Drop item on ground if it exists
             inventory[selectedIndex] = null;
-            hotbar.UnselectAll();
+            hotbar.SelectNext();
             UpdateHotbar();
         }
     }

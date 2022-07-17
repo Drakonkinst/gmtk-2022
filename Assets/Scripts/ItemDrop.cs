@@ -10,15 +10,21 @@ public class ItemDrop : MonoBehaviour
     public float dropPickupDelay = 1.0f;
     public float lootPickupDelay = 0.2f;
     public float lifetime = 60.0f;
+    public float rotationPerSecond = 60.0f;
+    public float velocity = 20.0f;
+    public float velocityDecayPerSecond = 20.0f;
+    public SoundEffect itemPickupSound;
     
     private Transform myTransform;
     private Renderer myRenderer;
     private Player player;
     private float pickupTime = 0.0f;
+    private Vector3 dir;
     
     void Awake() {
         myTransform = transform;
         myRenderer = GetComponent<Renderer>();
+        dir = new Vector3(Random.value, 0.0f, Random.value);
     }
     
     // Start is called before the first frame update
@@ -29,10 +35,12 @@ public class ItemDrop : MonoBehaviour
     }
     
     void Update() {
+        myTransform.Rotate(new Vector3(0.0f, rotationPerSecond * Time.deltaTime, 0.0f));
         if(Time.time > pickupTime) {
             float distSqToPlayer = (myTransform.position - player.GetTransform().position).sqrMagnitude;
             if(distSqToPlayer < pickupDistance * pickupDistance) {
                 if(player.HasOpenSlot()) {
+                    GameState.instance.PlaySound(itemPickupSound);
                     player.AddItem(id);
                     Destroy(gameObject);
                 }
@@ -41,6 +49,13 @@ public class ItemDrop : MonoBehaviour
         lifetime -= Time.deltaTime;
         if(lifetime <= 0.0f) {
             Destroy(gameObject);
+        }
+    }
+    
+    void FixedUpdate() {
+        if(velocity > 0) {
+            myTransform.position += dir * velocity * Time.deltaTime;
+            velocity -= velocityDecayPerSecond * Time.deltaTime;
         }
     }
     

@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Hotbar : MonoBehaviour
 {
     public Vector3 focusedSize;
     public Vector3 focusedPos;
     public Vector3 focusedRot;
+    public TextMeshProUGUI itemName;
+    public TextMeshProUGUI itemDescription;
+    public GameObject itemInfo;
+    public SoundEffect swapCardSound;
     
     private HotbarItem[] items;
+    private string[] inventory;
     private Transform myTransform;
     private int selected = -1;
 
@@ -30,6 +36,7 @@ public class Hotbar : MonoBehaviour
         if(inventory.Length != items.Length) {
             Debug.LogWarning("Inventory and Hotbar length should match (" + inventory.Length + " vs " + items.Length + ")");
         }
+        this.inventory = inventory;
         for(int i = 0; i < items.Length; ++i) {
             if(inventory[i] == null || inventory[i].Length <= 0) {
                 items[i].SetActive(false);
@@ -56,13 +63,27 @@ public class Hotbar : MonoBehaviour
     }
     
     public void Select(int index) {
-        Debug.Log("SELECT " + index);
+        //Debug.Log("SELECT " + index);
+        // Reset
+        itemInfo.SetActive(false);
+        itemName.text = "";
+        itemDescription.text = "";
+        
         foreach(HotbarItem item in items) {
             item.Unfocus();
+        }
+        if(selected != index) {
+            GameState.instance.PlaySound(swapCardSound);
         }
         selected = index;
         if(IsValid(index)) {
             items[index].Focus();
+            itemInfo.SetActive(true);
+            ItemEntry entry = GameState.instance.GetItemInfo(inventory[index]);
+            itemName.text = entry.name;
+            if(entry.stackable) {
+                itemDescription.text = "(Stackable)";
+            }
         }
     }
     
@@ -115,7 +136,7 @@ public class Hotbar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UnselectAll();
     }
 
     // Update is called once per frame
