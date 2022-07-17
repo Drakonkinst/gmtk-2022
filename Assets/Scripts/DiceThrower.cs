@@ -47,7 +47,7 @@ public class DiceThrower : MonoBehaviour
     void Update()
     {
         bool shouldFire = isMouseHeld || gamepadInput.sqrMagnitude >= minGamepadThreshold * minGamepadThreshold;
-        if(player.CanShootDice() && shouldFire && nextFire < Time.time) {
+        if(!player.isDead && player.CanShootDice() && shouldFire && nextFire < Time.time) {
             Vector3 dir = FindTargetDir();
             Fire(myTransform.position, dir, true);
             GameState.instance.PlaySound(throwDiceSound);
