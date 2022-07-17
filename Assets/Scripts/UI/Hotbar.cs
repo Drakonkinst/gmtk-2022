@@ -18,7 +18,7 @@ public class Hotbar : MonoBehaviour
         int index = 0;
         foreach(Transform hotbarItem in myTransform) {
             HotbarItem item = hotbarItem.GetComponent<HotbarItem>();
-            item.SetFocusedData(focusedSize, focusedPos, Quaternion.Euler(focusedRot.x, focusedRot.y, focusedRot.z));
+            item.SetFocusedData(index, focusedSize, focusedPos, Quaternion.Euler(focusedRot.x, focusedRot.y, focusedRot.z));
             items[index++] = item;
             if(index >= 4) {
                 break;
@@ -32,16 +32,25 @@ public class Hotbar : MonoBehaviour
         }
         for(int i = 0; i < items.Length; ++i) {
             if(inventory[i] == null || inventory[i].Length <= 0) {
-                // TODO Set slot inactive
+                items[i].SetActive(false);
                 continue;
             }
             
             string id = inventory[i];
             ItemEntry entry = GameState.instance.GetItemInfo(id);
-            if(entry.id != "") {
+            if(entry.id == "") {
                 // Set slot inactive
+                items[i].SetActive(false);
+                continue;
             }
             // TODO set item
+            items[i].SetActive(true);
+        }
+    }
+    
+    public void FinishInstant() {
+        foreach(HotbarItem item in items) {
+            item.FinishInstant();
         }
     }
     
@@ -92,6 +101,14 @@ public class Hotbar : MonoBehaviour
             }
         }
         Select(-1);
+    }
+    
+    public void UnselectAll() {
+        Select(-1);
+    }
+    
+    public int GetSelectedIndex() {
+        return selected;
     }
     
     // Start is called before the first frame update

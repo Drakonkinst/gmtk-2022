@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
         diceIcon.SetFaceInstant(ammo);
         diceManager = GameState.instance.GetDiceManager();
         UpdateHotbar();
+        hotbar.FinishInstant();
     }
 
     // Update is called once per frame
@@ -220,6 +221,15 @@ public class Player : MonoBehaviour
         hotbar.SelectPrev();
     }
     
+    public void OnUnselectAll() {
+        hotbar.UnselectAll();
+    }
+    
+    public void OnDrop() {
+        Debug.Log("DROP");
+        DropCurrentItem();
+    }
+    
     // Items
     
     public bool HasItem(string id) {
@@ -269,6 +279,9 @@ public class Player : MonoBehaviour
             return false;
         }
         inventory[nextOpenSlot] = id;
+        if(hotbar.GetSelectedIndex() < 0) {
+            SelectIfValid(nextOpenSlot);
+        }
         UpdateHotbar();
         return true;
     }
@@ -278,9 +291,23 @@ public class Player : MonoBehaviour
         if(index < 0) {
             return false;
         }
+        if(hotbar.GetSelectedIndex() == index) {
+            hotbar.UnselectAll();
+        }
         inventory[index] = null;
         UpdateHotbar();
         return true;
+    }
+    
+    public void DropCurrentItem() {
+        int selectedIndex = hotbar.GetSelectedIndex();
+        Debug.Log(selectedIndex);
+        if(selectedIndex > -1) {
+            // TODO Drop item on ground if it exists
+            inventory[selectedIndex] = null;
+            hotbar.UnselectAll();
+            UpdateHotbar();
+        }
     }
     
     private void UpdateHotbar() {

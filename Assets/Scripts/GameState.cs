@@ -10,7 +10,7 @@ public struct ItemEntry {
     public string description;
     public float weight;
     public bool stackable;
-    // TODO: Icon prefab
+    public Material card;
 }
 
 [RequireComponent(typeof(EnemySpawner))]
@@ -31,6 +31,8 @@ public class GameState : MonoBehaviour
     private float groundWidth;
     private float groundHeight;
     private int walkableMask;
+    private float weightSum = 0.0f;
+    private float timeSurvived = 0.0f;
     
     void Awake() {
         instance = this;
@@ -42,6 +44,15 @@ public class GameState : MonoBehaviour
         groundWidth = bounds.extents.x * 2;
         groundHeight = bounds.extents.z * 2;
         walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
+        
+        foreach(ItemEntry entry in itemRegistry) {
+            weightSum += entry.weight;
+        }
+    }
+    
+    void Update() {
+        // TODO: Check if game is actually running
+        timeSurvived += Time.deltaTime;
     }
 
     public Player GetPlayer() {
@@ -91,5 +102,24 @@ public class GameState : MonoBehaviour
         }
         Debug.LogWarning("Unknown item " + id);
         return new ItemEntry();
+    }
+    
+    public ItemEntry RandomItem() {
+        float target = UnityEngine.Random.Range(0.0f, weightSum);
+        float curr = 0.0f;
+        int index = 0;
+        while(curr <= target) {
+            ItemEntry entry = itemRegistry[index++];
+            curr += entry.weight;
+            if(curr >= target) {
+                return entry;
+            }
+        }
+        Debug.LogWarning("Failed to generate item");
+        return new ItemEntry();
+    }
+    
+    public float GetTimeSurvived() {
+        return timeSurvived;
     }
 }

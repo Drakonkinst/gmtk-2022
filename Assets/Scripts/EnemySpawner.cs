@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
         public GameObject prefab;
         public float weight;
         public int strength;
+        public float minSurvivalTime;
     }
 
     public int maxStrength = 5;
@@ -21,8 +22,15 @@ public class EnemySpawner : MonoBehaviour
     public float spawnInterval = 5.0f;
     public EnemyEntry[] enemies;
     public Transform enemyParent;
+    public float weightSum = 0.0f;
     
     private float nextSpawn;
+    
+    void Awake() {
+        foreach(EnemyEntry entry in enemies) {
+            weightSum += entry.weight;
+        }
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -58,8 +66,12 @@ public class EnemySpawner : MonoBehaviour
     }
     
     private void DoSpawn() {
-        // Hardcoded to single enemy
-        EnemyEntry entry = enemies[0];
+        // Pick enemy type
+        int attemptsRemaining = 3;
+        EnemyEntry entry = RandomEnemy();
+        while(entry.minSurvivalTime > GameState.instance.GetTimeSurvived() && attemptsRemaining-- > 0) {
+            entry = RandomEnemy();
+        }
         
         // Pick position
         // TODO: Make sure it is not close to the player
@@ -89,6 +101,21 @@ public class EnemySpawner : MonoBehaviour
                 return entry;
             }
         }
+        return new EnemyEntry();
+    }
+    
+    public EnemyEntry RandomEnemy() {
+        float target = UnityEngine.Random.Range(0.0f, weightSum);
+        float curr = 0.0f;
+        int index = 0;
+        while(curr <= target) {
+            EnemyEntry entry = enemies[index++];
+            curr += entry.weight;
+            if(curr >= target) {
+                return entry;
+            }
+        }
+        Debug.LogWarning("Failed to generate item");
         return new EnemyEntry();
     }
 }

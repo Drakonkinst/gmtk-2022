@@ -2672,36 +2672,44 @@ MonoBehaviour:
   itemRegistry:
   - id: QuickShot
     description: 
-    weight: 0
+    weight: 1
     stackable: 1
+    card: {fileID: 0}
   - id: MoreAmmo
     description: 
-    weight: 0
+    weight: 1
     stackable: 0
+    card: {fileID: 0}
   - id: DoubleShot
     description: 
-    weight: 0
+    weight: 1
     stackable: 1
+    card: {fileID: 0}
   - id: PopcornShot
     description: 
-    weight: 0
+    weight: 1
     stackable: 0
+    card: {fileID: 0}
   - id: LongShot
     description: 
-    weight: 0
+    weight: 1
     stackable: 1
+    card: {fileID: 0}
   - id: Undying
     description: 
-    weight: 0
+    weight: 1
     stackable: 1
+    card: {fileID: 0}
   - id: FastReload
     description: 
-    weight: 0
+    weight: 1
     stackable: 1
+    card: {fileID: 0}
   - id: FastRun
     description: 
-    weight: 0
+    weight: 1
     stackable: 1
+    card: {fileID: 0}
 --- !u!4 &1887648177
 Transform:
   m_ObjectHideFlags: 0
@@ -2740,7 +2748,9 @@ MonoBehaviour:
     prefab: {fileID: 7076059079538415632, guid: ab56a6b1715d1b74b9ef553a85b8bb6c, type: 3}
     weight: 1
     strength: 1
+    minSurvivalTime: 0
   enemyParent: {fileID: 399576140}
+  weightSum: 0
 --- !u!114 &1887648179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3262,6 +3272,10 @@ PrefabInstance:
       objectReference: {fileID: 7218880}
     - target: {fileID: 7716961207057480867, guid: 09dfa9e069259114a88e689f9842c8ba, type: 3}
       propertyPath: inventory.Array.data[0]
+      value: FastRun
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716961207057480867, guid: 09dfa9e069259114a88e689f9842c8ba, type: 3}
+      propertyPath: inventory.Array.data[1]
       value: FastRun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
