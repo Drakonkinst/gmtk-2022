@@ -50,10 +50,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activationTime: 0.5
   disableTime: 0.1
-  explosionDamage: 100
+  damageSpeedMin: 1
+  explosionDamage: 120
   smallExplosionRadius: 4
   bigExplosionRadius: 8
-  overrideFace: -1
+  overrideFace: 3
+  numSplits: 3
+  diceRollSound:
+    sounds:
+    - {fileID: 8300000, guid: 4903c003f1014d64387f5ce884e8123e, type: 3}
+    - {fileID: 8300000, guid: 23a350e6165afc54abe67eee5b52001d, type: 3}
+    - {fileID: 8300000, guid: 5bffb619bf191b3468cb920df0922d84, type: 3}
+    - {fileID: 8300000, guid: d8413209708729f4a9e2cd0e21b6ea9c, type: 3}
+    volume: 1
+  doubledSound:
+    sounds:
+    - {fileID: 8300000, guid: eca9db6ca805440459ea0cb5d550fa33, type: 3}
+    volume: 1
+  spawnCardSound:
+    sounds: []
+    volume: 1
+  freezeSound:
+    sounds:
+    - {fileID: 8300000, guid: bf26a895891ad4b42b07ab9685e15eb5, type: 3}
+    volume: 1
+  damageSound:
+    sounds:
+    - {fileID: 8300000, guid: 58ce0316a21fe974886bc151b0cf0571, type: 3}
+    volume: 1
+  healSound:
+    sounds:
+    - {fileID: 8300000, guid: af69e39b71b54d742a0276bf2380b202, type: 3}
+    volume: 0.5
+  explosionSound:
+    sounds:
+    - {fileID: 8300000, guid: b610cc7e41784c645a1e5bcfe867580e, type: 3}
+    volume: 1
+  decoySound:
+    sounds:
+    - {fileID: 8300000, guid: db8150c72443de5499c174f4f77a52c8, type: 3}
+    volume: 1
+  explosionParticle: {fileID: 100000, guid: f881607407b15cc46b24d6bda799037a, type: 3}
+  freezeParticle: {fileID: 100006, guid: 316609e80151dfa4083d32429c34d8d1, type: 3}
+  healParticle: {fileID: 100006, guid: 9902f5b901f026e4a9e8d7c67e220d0d, type: 3}
+  decoyParticle: {fileID: 0}
+  spawnParticle: {fileID: 0}
+  damageParticle: {fileID: 100006, guid: 28720097ea0b7aa498c8e9b11c758690, type: 3}
+  bigExplosionParticle: {fileID: 100000, guid: 96f58a9bd091b14489fca9979afa8777, type: 3}
+  bigFreezeParticle: {fileID: 100006, guid: d88bfd393df474f459bf23472fcba31a, type: 3}
+  bigDamageParticle: {fileID: 100006, guid: e11f272c6cd69574ab705a588b2129e6, type: 3}
+  bigHealParticle: {fileID: 100006, guid: 6dec00deef4e9f64aa0488520da643fb, type: 3}
 --- !u!33 &7098075400793510478
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {   
+    public float masterVolume = 0.5f;
     private AudioSource audioSource;
     
     void Awake() {
@@ -17,6 +18,6 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("No sound found");
             return;
         }
-        audioSource.PlayOneShot(effect.sounds[UnityEngine.Random.Range(0, effect.sounds.Length)], effect.volume);
+        audioSource.PlayOneShot(effect.sounds[UnityEngine.Random.Range(0, effect.sounds.Length)], effect.volume * masterVolume);
     }
 }

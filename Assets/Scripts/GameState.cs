@@ -124,6 +124,9 @@ public class GameState : MonoBehaviour
     }
     
     public void PlayEffect(GameObject prefab, Vector3 position, Transform parent) {
+        if(prefab == null) {
+            return;
+        }
         GameObject effect = Instantiate(prefab, position, Quaternion.identity, parent);
         effect.GetComponent<ParticleSystem>().Play();
     }

@@ -55,6 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   turnSpeed: 1000
+  bonusSpeedMultiplier: 0.2
 --- !u!114 &7716961207057480867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +90,10 @@ MonoBehaviour:
   - 
   - 
   - 
+  isDead: 0
+  dropCardSound:
+    sounds: []
+    volume: 1
 --- !u!114 &4226228144728214100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +113,11 @@ MonoBehaviour:
   throwSpeedUp: -100
   momentumMultiplier: 40
   tumble: 100
+  throwDiceSound:
+    sounds:
+    - {fileID: 8300000, guid: 44c6a39aa0df4394d994071f2564ba09, type: 3}
+    - {fileID: 8300000, guid: ada46fa5e54064c49abc6d288cc35f99, type: 3}
+    volume: 0.5
   bonusThrowSpeed: 250
   bonusThrowRateMultiplier: 0.5
 --- !u!33 &4226228144728214106
