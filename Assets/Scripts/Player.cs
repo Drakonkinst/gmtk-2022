@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     public string[] inventory;
     public bool isDead = false;
     public SoundEffect dropCardSound;
+    public SoundEffect playerDeathSound;
     
     private Transform myTransform;
     private DiceThrower thrower;
@@ -106,6 +107,7 @@ public class Player : MonoBehaviour
                 } else {
                     // Dead
                     isDead = true;
+                    GameState.instance.PlaySound(playerDeathSound);
                 }
             }
             UpdateHealthBar();

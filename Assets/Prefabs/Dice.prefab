@@ -66,6 +66,7 @@ MonoBehaviour:
   doubledSound:
     sounds:
     - {fileID: 8300000, guid: eca9db6ca805440459ea0cb5d550fa33, type: 3}
+    - {fileID: 8300000, guid: dfda34821778dee4ebd7409302b5518d, type: 3}
     volume: 1
   spawnCardSound:
     sounds: []

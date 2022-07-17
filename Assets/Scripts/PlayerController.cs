@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 10;
     public float turnSpeed = 360;
     public float bonusSpeedMultiplier = 0.2f;
+    public Animator animator;
     
     private CharacterController controller;
     private Player player;
@@ -40,9 +41,11 @@ public class PlayerController : MonoBehaviour
         if(inputDirection != Vector3.zero) {
             Look(inputDirection);
             movementVelocity = myTransform.forward * GetMaxSpeed() * Time.deltaTime;
+            animator.SetBool("Walk_Anim", true);
         } else {
             movementVelocity.x = 0.0f;
             movementVelocity.z = 0.0f;
+            animator.SetBool("Walk_Anim", false);
         }
         controller.Move(movementVelocity);
         myTransform.position = new Vector3(myTransform.position.x, yPos, myTransform.position.z);
