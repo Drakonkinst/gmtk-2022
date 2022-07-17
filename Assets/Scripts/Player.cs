@@ -108,6 +108,7 @@ public class Player : MonoBehaviour
                     // Dead
                     isDead = true;
                     GameState.instance.PlaySound(playerDeathSound);
+                    // TODO game over screen
                 }
             }
             UpdateHealthBar();
@@ -194,6 +195,9 @@ public class Player : MonoBehaviour
     // Input
     
     public void OnScroll(InputValue value) {
+        if(isDead) {
+            return;
+        }
         float scroll = value.Get<Vector2>().y;
         if(scroll > 0) {
             hotbar.SelectPrev();
@@ -203,35 +207,58 @@ public class Player : MonoBehaviour
     }
     
     public void OnSelectItem1() {
+        if(isDead) {
+            return;
+        }
         SelectIfValid(0);
     }
     
     public void OnSelectItem2() {
+        if(isDead) {
+            return;
+        }
         SelectIfValid(1);
     }
     
     public void OnSelectItem3() {
+        if(isDead) {
+            return;
+        }
         SelectIfValid(2);
     }
     
     public void OnSelectItem4() {
+        if(isDead) {
+            return;
+        }
         SelectIfValid(3);
     }
     
     public void OnSelectNext() {
+        if(isDead) {
+            return;
+        }
         hotbar.SelectNext();
     }
     
     public void OnSelectPrev() {
+        if(isDead) {
+            return;
+        }
         hotbar.SelectPrev();
     }
     
     public void OnUnselectAll() {
+        if(isDead) {
+            return;
+        }
         hotbar.UnselectAll();
     }
     
     public void OnDrop() {
-        Debug.Log("DROP");
+        if(isDead) {
+            return;
+        }
         DropCurrentItem();
     }
     
@@ -285,9 +312,9 @@ public class Player : MonoBehaviour
         }
         inventory[nextOpenSlot] = id;
         UpdateHotbar();
-        if(hotbar.GetSelectedIndex() < 0) {
+        //if(hotbar.GetSelectedIndex() < 0) {
             SelectIfValid(nextOpenSlot);
-        }
+        //}
         return true;
     }
     

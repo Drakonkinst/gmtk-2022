@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 inputDirection = new Vector3(moveInput.x, 0.0f, moveInput.y).normalized;
-        if(inputDirection != Vector3.zero) {
+        if(inputDirection != Vector3.zero && !player.isDead) {
             Look(inputDirection);
             movementVelocity = myTransform.forward * GetMaxSpeed() * Time.deltaTime;
             animator.SetBool("Walk_Anim", true);
@@ -90,6 +90,9 @@ public class PlayerController : MonoBehaviour
     // Input Actions
     
     public void OnMove(InputValue value) {
+        if(player.isDead) {
+            return;
+        }
         moveInput = value.Get<Vector2>();
     }
 }

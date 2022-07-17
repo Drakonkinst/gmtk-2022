@@ -44,6 +44,12 @@ public class EnemyController : MonoBehaviour
     }
     
     void Update() {
+        if(player.isDead) {
+            agent.isStopped = true;
+            agent.ResetPath();
+            return;
+        }
+        
         // Check decoy
         DecoyField nearestDecoy = diceManager.GetNearestDecoy(myTransform.position);
         if(nearestDecoy == null) {

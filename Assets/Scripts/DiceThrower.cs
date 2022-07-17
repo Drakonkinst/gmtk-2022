@@ -67,10 +67,16 @@ public class DiceThrower : MonoBehaviour
     }
     
     public void OnFire(InputValue value) {
+        if(player.isDead) {
+            return;
+        }
         isMouseHeld = value.isPressed;
     }
     
     public void OnFireDirectional(InputValue value) {
+        if(player.isDead) {
+            return;
+        }
         gamepadInput = value.Get<Vector2>();
     }
     

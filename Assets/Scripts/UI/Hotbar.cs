@@ -83,6 +83,8 @@ public class Hotbar : MonoBehaviour
             itemName.text = entry.name;
             if(entry.stackable) {
                 itemDescription.text = "(Stackable)";
+            } else {
+                itemDescription.text = "(Unstackable)";
             }
         }
     }
