@@ -54,7 +54,7 @@ MonoBehaviour:
   explosionDamage: 120
   smallExplosionRadius: 4
   bigExplosionRadius: 8
-  overrideFace: 3
+  overrideFace: -1
   numSplits: 3
   diceRollSound:
     sounds:
