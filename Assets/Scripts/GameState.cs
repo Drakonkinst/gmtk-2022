@@ -36,6 +36,7 @@ public class GameState : MonoBehaviour
     public TextMeshProUGUI gameOverTime;
     public TextMeshProUGUI gameOverKills;
     public int enemiesKilled = 0;
+    public bool gameStarted = false;
     
     private EnemySpawner enemySpawner;
     private DiceManager diceManager;
@@ -70,7 +71,7 @@ public class GameState : MonoBehaviour
             timeSurvived += Time.deltaTime;
             timeSurvivedText.text = "" + ((int) timeSurvived);
         }
-        if(player.isDead && !gameOverScreen.activeSelf) {
+        if(gameStarted && player.isDead && !gameOverScreen.activeSelf) {
             gameOverTime.text = "Time Survived: " + ((int) timeSurvived) + " seconds";
             gameOverKills.text = "Enemies Killed: " + enemiesKilled;
             gameOverScreen.SetActive(true);
