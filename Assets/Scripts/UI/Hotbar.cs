@@ -43,7 +43,8 @@ public class Hotbar : MonoBehaviour
                 items[i].SetActive(false);
                 continue;
             }
-            // TODO set item
+            
+            items[i].SetMaterial(entry.card);
             items[i].SetActive(true);
         }
     }

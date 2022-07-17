@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     public float contactDamageDistance = 2.2f;
     public float contactDamageInterval = 3.0f;
     public float contactDamage = 10.0f;
+    public float cardDropChance = 1.0f;
     
     protected NavMeshAgent agent;
     protected Player player;
@@ -106,6 +107,9 @@ public class EnemyController : MonoBehaviour
     }
     
     private void OnDeath() {
+        if(Random.value < cardDropChance) {
+            GameState.instance.SpawnItemDrop(myTransform.position, false);
+        }
         GameState.instance.GetEnemySpawner().OnDeath(id);
         Destroy(gameObject);
     }

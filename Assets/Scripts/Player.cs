@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public float undyingHeal = 60.0f;
     public float undyingShield = 30.0f;
     public string[] inventory;
+    public bool isDead = false;
     
     private Transform myTransform;
     private DiceThrower thrower;
@@ -103,6 +104,7 @@ public class Player : MonoBehaviour
                     RemoveItem("Undying");
                 } else {
                     // Dead
+                    isDead = true;
                 }
             }
             UpdateHealthBar();
@@ -279,10 +281,10 @@ public class Player : MonoBehaviour
             return false;
         }
         inventory[nextOpenSlot] = id;
+        UpdateHotbar();
         if(hotbar.GetSelectedIndex() < 0) {
             SelectIfValid(nextOpenSlot);
         }
-        UpdateHotbar();
         return true;
     }
     

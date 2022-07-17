@@ -21,9 +21,11 @@ public class GameState : MonoBehaviour
     
     public Player player;
     public Transform diceParent;
+    public Transform itemDropParent;
     public Camera mainCamera;
     public Renderer groundRenderer;
     public ItemEntry[] itemRegistry;
+    public GameObject itemDropPrefab;
     
     private EnemySpawner enemySpawner;
     private DiceManager diceManager;
@@ -52,7 +54,9 @@ public class GameState : MonoBehaviour
     
     void Update() {
         // TODO: Check if game is actually running
-        timeSurvived += Time.deltaTime;
+        if(!player.isDead) {
+            timeSurvived += Time.deltaTime;
+        }
     }
 
     public Player GetPlayer() {
@@ -94,6 +98,10 @@ public class GameState : MonoBehaviour
         return diceParent;
     }
     
+    public float GetTimeSurvived() {
+        return timeSurvived;
+    }
+    
     public ItemEntry GetItemInfo(string id) {
         foreach(ItemEntry item in itemRegistry) {
             if(item.id == id) {
@@ -119,7 +127,15 @@ public class GameState : MonoBehaviour
         return new ItemEntry();
     }
     
-    public float GetTimeSurvived() {
-        return timeSurvived;
+    public void SpawnItemDrop(Vector3 pos, bool dropped) {
+        ItemEntry item = RandomItem();
+        GameObject obj = Instantiate(itemDropPrefab, pos, Quaternion.identity, itemDropParent);
+        ItemDrop drop = obj.GetComponent<ItemDrop>();
+        drop.SetItem(item.id);
+        if(dropped) {
+            drop.AfterDrop();
+        } else {
+            drop.AfterLoot();
+        }
     }
 }
