@@ -62,8 +62,9 @@ MonoBehaviour:
   canShoot: 0
   projectilePrefab: {fileID: 0}
   diceHitSound:
-    sounds: []
-    volume: 1
+    sounds:
+    - {fileID: 8300000, guid: 9af17f08402c58e44952cfd5a898e7d9, type: 3}
+    volume: 0.5
   deathSound:
     sounds: []
     volume: 1
@@ -71,8 +72,9 @@ MonoBehaviour:
     sounds: []
     volume: 1
   hitPlayerSound:
-    sounds: []
-    volume: 1
+    sounds:
+    - {fileID: 8300000, guid: 9af17f08402c58e44952cfd5a898e7d9, type: 3}
+    volume: 0.5
 --- !u!33 &7076059079538415637
 MeshFilter:
   m_ObjectHideFlags: 0

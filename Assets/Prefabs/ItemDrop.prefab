@@ -104,3 +104,9 @@ MonoBehaviour:
   rotationPerSecond: 60
   velocity: 10
   velocityDecayPerSecond: 50
+  itemPickupSound:
+    sounds:
+    - {fileID: 8300000, guid: 859bbe18156660344bd91305a2ecb141, type: 3}
+    - {fileID: 8300000, guid: f0619387b6b0b974d826c262c4c8a54d, type: 3}
+    - {fileID: 8300000, guid: c208e8dc4ef79c3479dffb4805f25c53, type: 3}
+    volume: 1

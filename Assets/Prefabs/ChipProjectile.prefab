@@ -115,11 +115,14 @@ MonoBehaviour:
   cannotBreakFor: 1
   lifetime: 5
   hitTerrainSound:
-    sounds: []
+    sounds:
+    - {fileID: 8300000, guid: 0454a2a026e05d546b152d03fdb525cb, type: 3}
     volume: 1
   hitPlayerSound:
-    sounds: []
-    volume: 1
+    sounds:
+    - {fileID: 8300000, guid: 9af17f08402c58e44952cfd5a898e7d9, type: 3}
+    volume: 0.5
   shootEffect:
-    sounds: []
+    sounds:
+    - {fileID: 8300000, guid: 34e758874a030e948884755278c5a00f, type: 3}
     volume: 1
